@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        //1、双指针
+        int left = 0, right = 0;
+        while(right < nums.size())
+        {
+            //不为0就交换  right找不为0的值的位置，left找为0的位置
+            if(nums[right])
+            {
+                swap(nums[left++], nums[right]);
+            }
+            right++;
+        }
+        //2、先将不是0的放前面去，后面覆盖为0即可
+        // int index = 0;
+        // for(int i = 0; i < nums.size(); ++i)
+        // {
+        //     if(nums[i] != 0)
+        //         nums[index++] = nums[i];
+        // }
+        // for(int i = index; i < nums.size(); ++ i)
+        // {
+        //     nums[i] = 0;
+        // }
+    }
+};

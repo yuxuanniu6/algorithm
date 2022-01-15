@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int mySqrt(int x) {
+        //1、面试不允许用sqrt的
+        // return sqrt(x);
+
+        //2、二分   在中间寻找平方根
+        //时间复杂度：O（logN）  空间复杂度：O（1）
+        // int l = 0, r = x, result = 0;
+        // while(l <= r)
+        // {
+        //     int mid = l + ((r - l) >> 1);
+        //     if((long long)mid * mid <= x)
+        //     {
+        //         result = mid;
+        //         l = mid + 1;
+        //     }
+        //     else
+        //     {
+        //         r = mid - 1;
+        //     }
+        // }
+        // return result;
+
+        //3、幂运算  空间时间：O（1）
+        if(x == 0) return 0;
+        //x^(1/2) = (e)^(lnX * 1/2)
+        int result = exp(0.5 * log(x));
+        //计算机不知道浮点数，X为8时，result = 2，x为9时result=3
+        return ((long long)(result + 1) * (result + 1) <= x ? result + 1 : result);
+    }
+};

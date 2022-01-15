@@ -1,0 +1,66 @@
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        if(nums.empty()) return {-1, -1};
+        vector<int> v;
+        // //第一种情况
+        // //1、当nums[mid] < target  left = mid + 1
+        // //2、当nums[mid] >= target right = mid;
+        
+        // int left = 0, right = nums.size() - 1;
+        // while(left < right)
+        // {
+        //     int mid = (left + right) >> 1;
+        //     if(nums[mid] >= target) right = mid;  
+        //     else left = mid + 1;
+        // }
+        // //左边匹配到相同的值，插入该位置的索引
+        // if(nums[right] != target)
+        //     return {-1, -1};
+        // v.push_back(right);
+        // //第二种情况
+        // //1、当nums[mid] <= target  left = mid
+        // //2、当nums[mid] > target right = mid - 1;
+        // left = 0, right = nums.size() - 1;
+        // while(left < right)
+        // {
+        //     //计算mid  区间划分为[left, mid-1] [mid, right] 所以mid需要l+r+1在除2
+        //     int mid = ((right + left + 1) >> 1);
+        //     if(nums[mid] <= target) left = mid;  
+        //     else right = mid - 1;
+        // }
+        // v.push_back(right);
+        // return v;
+        
+        //第二种方法
+        int left = 0, right = nums.size() - 1;
+        int leftBorder = -2, rightBorder = -2;
+        while(left <= right)
+        {
+            int mid = left + ((right - left) >> 1);
+            if(nums[mid] >= target)
+            {
+                right = mid - 1;
+                leftBorder = right;
+            }
+            else left = mid + 1;
+        }
+       
+        left = 0, right = nums.size() - 1;
+        while(left <= right)
+        {
+            int mid = left + ((right - left) >> 1);
+            if(nums[mid] > target)  right = mid - 1;
+            else 
+            {
+                left = mid + 1;
+                rightBorder = left;
+            }
+        }
+        if (leftBorder == -2 || rightBorder == -2) return {-1, -1};
+        // 情况三
+        if (rightBorder - leftBorder > 1) return {leftBorder + 1, rightBorder - 1};
+        // 情况二
+        return {-1, -1};
+    }
+};

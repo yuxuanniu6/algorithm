@@ -1,0 +1,38 @@
+原题链接：https://leetcode-cn.com/problems/search-insert-position/
+
+代码：
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int len = nums.size();
+        //1、暴力解法 时间：O（n） 空间：O（1）
+        // for(int i = 0; i < len ; ++ i)
+        // {
+        //     if(nums[i] >= target)
+        //         return i;
+        // }
+        // return nums.size();
+        //2、二分，时间：O（logN） 空间：O（1）
+        int left = 0;
+        int right = nums.size() - 1; //这里为length，
+        while(left <= right)
+        {
+            int mid = left + ((right - left) >> 1);//右移一位除2
+            if(nums[mid] > target)
+            {
+                right = mid - 1;//这里注意为mid，初始时是length
+            }
+            else if(nums[mid] < target)
+            {
+                left = mid + 1;
+            }
+            else
+            {
+                return mid;
+            }
+        }
+        //如果target大于数组中的所有数，那么right就没变，直接返回 + 1即可
+        return right + 1;
+    }   
+    
+};
